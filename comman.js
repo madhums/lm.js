@@ -28,7 +28,7 @@ $.fn.serializeObject = function() {
  */
 
 function getBaseUrl () {
-  var apiUrl = 'http://192.168.2.128:3000';
+  var apiUrl = '';
   return apiUrl;
 }
 
