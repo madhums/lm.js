@@ -101,6 +101,34 @@ lm.prototype.remove = function(name) {
   return this;
 };
 
+/**
+ * Get a collection
+ *
+ * @param {String} name
+ * @return {Object}
+ * @api public
+ */
+
+lm.prototype.get = function(name) {
+  if (!name) {
+    throw new Error('Please specify a name');
+  }
+
+  // remove from the collections list
+  var index = this.collections.indexOf(name);
+
+  // if not found, return
+  if (index < 0) {
+    throw new Error('Collection does not exist');
+    return this;
+  }
+
+  // retrieve from the db
+  var ns = db.retrieve(this.namespace);
+
+  return ns[name];
+};
+
 
 /**
  * Collection
