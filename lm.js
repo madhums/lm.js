@@ -126,7 +126,7 @@ lm.prototype.get = function(name) {
   // retrieve from the db
   var ns = db.retrieve(this.namespace);
 
-  return ns[name];
+  return new Query(ns[name]);
 };
 
 
@@ -171,6 +171,21 @@ Collection.prototype.add = function(record) {
   return this;
 };
 
+
+/**
+ * Query
+ *
+ * @param {String} namespace
+ * @param {String} name - name of the collection
+ * @return {Object}
+ * @api public
+ */
+
+function Query (namespace, name) {
+  this.namespace = namespace;
+  this.collection = name;
+}
+
 /**
  * Find a record and remove
  *
@@ -179,31 +194,31 @@ Collection.prototype.add = function(record) {
  * @api public
  */
 
-Collection.prototype.findAndRemove = function() {
+Query.prototype.findAndRemove = function() {
 
 };
 
 /**
- * Find by attribute
+ * Find
  *
  * @param {Type} name
  * @return {Type}
  * @api public
  */
 
-Collection.prototype.findByAttr = function() {
+Query.prototype.find = function() {
 
 };
 
 /**
- * Find and update
+ * Find one
  *
  * @param {Type} name
  * @return {Type}
  * @api public
  */
 
-Collection.prototype.findAndUpdate = function() {
+Query.prototype.findOne = function() {
 
 };
 
