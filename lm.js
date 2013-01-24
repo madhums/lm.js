@@ -230,7 +230,7 @@ Query.prototype.find = function(criteria, callback) {
 
   // no criteries given, so return the whole collection
   if (!Object.keys(criteria).length) {
-    callback(collection);
+    callback(null, collection);
   } else {
     var keys = Object.keys(criteria);
 
