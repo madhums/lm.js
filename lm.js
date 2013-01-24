@@ -253,7 +253,7 @@ Storage.prototype.getObject = function(key) {
   var value = this.getItem(key);
   var object = value && JSON.parse(value);
   // Firefox fix.
-  if (typeof object == "string") {
+  if (typeof object == 'string') {
     object = object && JSON.parse(object);
   }
   return object;
