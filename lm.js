@@ -236,8 +236,8 @@ Query.prototype.find = function(criteria, callback) {
 
     });
 
-    // change the prototype of result
-    result.__proto__ = Query.prototype;
+    // change the prototype of result to current instance
+    result.__proto__ = this;
 
     callback(null, result);
   }
