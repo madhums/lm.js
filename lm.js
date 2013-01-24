@@ -3,12 +3,28 @@
  * New database
  *
  * @param {String} name - name of the database
+ * @param {Object} options - options
+ *
+ * Example
+ *   var todoapp = new lm('todoapp', {
+ *     debug: false
+ *   });
+ *
  */
 
-function lm (namespace) {
+var debug = true;
+
+function lm (namespace, options) {
   if (!namespace) {
     throw new Error('Please provide a name for the db');
   }
+
+  var _options = {
+    debug: true
+  };
+
+  this.options = options || _options;
+  debug = this.options.debug;
 
   // create a namespaced object
   db.store(namespace, {});
@@ -26,6 +42,13 @@ function lm (namespace) {
  * @param {Array} arr - collection of objects
  * @return {Object}
  * @api public
+ *
+ * Example
+ *   var todos = todoapp.create('todos');
+ *   var todos = todoapp.create('todos', [
+ *     {id: 1, name: 'shopping'},
+ *     {id: 2, name: 'washing'}
+ *   ]);
  */
 
 lm.prototype.create = function(name, arr) {
@@ -49,6 +72,9 @@ lm.prototype.create = function(name, arr) {
  * @param {String} name
  * @return {Object}
  * @api public
+ *
+ * Example
+ *   todoapp.remove('todos');
  */
 
 lm.prototype.remove = function(name) {
@@ -58,6 +84,13 @@ lm.prototype.remove = function(name) {
 
   // remove from the collections list
   var index = this.collections.indexOf(name);
+
+  // if not found, return
+  if (index < 0) {
+    log(name + ' collection does not exist');
+    return this;
+  }
+
   this.collections.splice(index, 1);
 
   // remove from the db
@@ -87,6 +120,15 @@ function Collection (name, namespace) {
  * @param {Object} record
  * @return {Object}
  * @api public
+ *
+ * Example
+ *   var todos = todoapp.create('todos');
+ *   todos.add({
+ *     { id: 1, name: 'shopping' }
+ *   })
+ *
+ *   you can also chain them
+ *   todoapp.create('todos').add({name: 'shopping'})
  */
 
 Collection.prototype.add = function(record) {
@@ -220,3 +262,13 @@ Storage.prototype.getObject = function(key) {
 Storage.prototype.removeObject = function (key) {
   this.removeItem(key);
 };
+
+
+/**
+ * log to console
+ */
+
+function log (message) {
+  if (debug) console.log(message);
+}
+
