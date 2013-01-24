@@ -1,27 +1,142 @@
 
-var db = {};
-
 /**
- * localStorage functions to set, get and remove objects
+ * New database
+ *
+ * @param {String} name - name of the database
  */
 
-Storage.prototype.setObject = function(key, value) {
-  this.setItem(key, JSON.stringify(value));
-};
-
-Storage.prototype.getObject = function(key) {
-  var value = this.getItem(key);
-  var object = value && JSON.parse(value);
-  // Firefox fix.
-  if (typeof object == "string") {
-    object = object && JSON.parse(object);
+function lm (namespace) {
+  if (!namespace) {
+    throw new Error('Please provide a name for the db');
   }
-  return object;
+
+  // create a namespaced object
+  db.store(namespace, {});
+
+  this.namespace = namespace;
+  this.collections = [];
+}
+
+/**
+ * Create a collection within the namespace
+ *
+ * A collection is just an Array within the namespace of db
+ *
+ * @param {String} name - name of the collection
+ * @param {Object|Array} obj - object or array to be stored
+ * @return {Object}
+ * @api public
+ */
+
+lm.prototype.create = function(name) {
+  if (!name) {
+    throw new Error('Please specify a name');
+  }
+
+  // set the object
+  var ns = db.retrieve(this.namespace);
+  ns[name] = [];
+  db.store(this.namespace, ns);
+
+  this.collections.push(name);
+
+  return new Collection(name, this.namespace);
 };
 
-Storage.prototype.removeObject = function (key) {
-  this.removeItem(key);
+/**
+ * Remove a collection
+ *
+ * @param {String} name
+ * @return {Object}
+ * @api public
+ */
+
+lm.prototype.remove = function(name) {
+  if (!name) {
+    throw new Error('Please specify a name');
+  }
+
+  // remove from the collections list
+  var index = this.collections.indexOf(name);
+  this.collections.splice(index, 1);
+
+  // remove from the db
+  var ns = db.retrieve(this.namespace);
+  delete ns[name];
+  db.store(this.namespace, ns);
+
+  return this;
 };
+
+
+/**
+ * Collection
+ *
+ * @param {String} name
+ * @api public
+ */
+
+function Collection (name, namespace) {
+  this.name = name;
+  this.namespace = namespace;
+}
+
+/**
+ * Add a record to the collection
+ *
+ * @param {Object} record
+ * @return {Object}
+ * @api public
+ */
+
+Collection.prototype.add = function(record) {
+  if (typeof record !== 'object') {
+    throw new Error('Expecting an object but got '+ typeof record)
+  }
+
+  var ns = db.retrieve(this.namespace);
+  ns[this.name].push(record);
+  db.store(this.namespace, ns);
+
+  return this;
+};
+
+/**
+ * Find a record and remove
+ *
+ * @param {Type} name
+ * @return {Type}
+ * @api public
+ */
+
+Collection.prototype.findAndRemove = function() {
+
+};
+
+/**
+ * Find by attribute
+ *
+ * @param {Type} name
+ * @return {Type}
+ * @api public
+ */
+
+Collection.prototype.findByAttr = function() {
+
+};
+
+/**
+ * Find and update
+ *
+ * @param {Type} name
+ * @return {Type}
+ * @api public
+ */
+
+Collection.prototype.findAndUpdate = function() {
+
+};
+
 
 /**
  * Alias function for localStorage.setObject
@@ -80,3 +195,26 @@ db.exists = function (key) {
 db.clear = function () {
   localStorage.clear();
 }
+
+
+/**
+ * Some generic localStorage get and set Object methods
+ */
+
+Storage.prototype.setObject = function(key, value) {
+  this.setItem(key, JSON.stringify(value));
+};
+
+Storage.prototype.getObject = function(key) {
+  var value = this.getItem(key);
+  var object = value && JSON.parse(value);
+  // Firefox fix.
+  if (typeof object == "string") {
+    object = object && JSON.parse(object);
+  }
+  return object;
+};
+
+Storage.prototype.removeObject = function (key) {
+  this.removeItem(key);
+};
