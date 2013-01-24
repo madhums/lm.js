@@ -16,7 +16,12 @@ var list = todoapp.create('todos');
 list.add({ name: 'shopping' });
 
 // even chain them
-var archived = todoapp.create('archived').add({ name: 'shopping' });
+var archived = todoapp
+                .create('archived')
+                .add({ name: 'shopping', tag: 'outside' })
+                .add({ name: 'eating', tag: 'kitchen' })
+                .add({ name: 'bathing', tag: 'inside' })
+                .add({ name: 'cleaning', tag: 'kitchen' });
 
 // initialize collection while creating
 var todos = [
@@ -33,7 +38,11 @@ var archived = todoapp.get('archived');
 
 // find
 archived.find({ tag: 'kitchen' }, function (err, docs) {
-  // do some stuff
+  console.log(docs);
+
+  docs.find({ name: 'eating' }, function (err, records) {
+    console.log(records);
+  });
 });
 
 // find and remove
