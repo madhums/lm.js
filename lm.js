@@ -161,7 +161,12 @@ function Collection (name, namespace) {
  *   })
  *
  *   // you can also chain them
- *   var archived = todoapp.create('archived').add({ name: 'eating' });
+ *   var archived = todoapp
+ *     .create('archived')
+ *     .add({ name: 'shopping', tag: 'outside' })
+ *     .add({ name: 'eating', tag: 'kitchen' })
+ *     .add({ name: 'bathing', tag: 'inside' })
+ *     .add({ name: 'cleaning', tag: 'kitchen' })
  */
 
 Collection.prototype.add = function(record) {
@@ -201,7 +206,11 @@ function Query (namespace, name) {
  *
  * Example
  *   archived.find({ tag: 'kitchen' }, function (err, docs) {
- *     // do some stuff
+ *     console.log(docs)
+ *
+ *     docs.find({ name: 'eating' }, function (err, records) {
+ *       console.log(records)
+ *     })
  *   })
  */
 
@@ -248,8 +257,9 @@ Query.prototype.find = function(criteria, callback) {
 /**
  * Find one
  *
- * @param {Type} name
- * @return {Type}
+ * @param {Object} criteria
+ * @param {Function} callback
+ * @return {Object}
  * @api public
  */
 
@@ -260,8 +270,9 @@ Query.prototype.findOne = function() {
 /**
  * Find a record and remove
  *
- * @param {Type} name
- * @return {Type}
+ * @param {Object} criteria
+ * @param {Function} callback
+ * @return {Object}
  * @api public
  */
 
