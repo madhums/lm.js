@@ -23,19 +23,19 @@ function lm (namespace) {
  * A collection is just an Array within the namespace of db
  *
  * @param {String} name - name of the collection
- * @param {Object|Array} obj - object or array to be stored
+ * @param {Array} arr - collection of objects
  * @return {Object}
  * @api public
  */
 
-lm.prototype.create = function(name) {
+lm.prototype.create = function(name, arr) {
   if (!name) {
     throw new Error('Please specify a name');
   }
 
   // set the object
   var ns = db.retrieve(this.namespace);
-  ns[name] = [];
+  ns[name] = arr || [];
   db.store(this.namespace, ns);
 
   this.collections.push(name);
@@ -137,6 +137,8 @@ Collection.prototype.findAndUpdate = function() {
 
 };
 
+
+var db = {}
 
 /**
  * Alias function for localStorage.setObject
