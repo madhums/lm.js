@@ -31,19 +31,20 @@ todoapp.remove('todos');
 // get collection
 var archived = todoapp.get('archived');
 
-// find, remove and update
+// find
 archived.find({ tag: 'kitchen' }, function (err, docs) {
   // do some stuff
 });
 
+// find and remove
 archived.findAndRemove({ id: 1 }, function (err) {
   // do some stuff
 });
 
-archived.findOne({ name: 'shopping' },  function (err, doc) {
-  doc.update({ name: 'shopping in delft' })
+// find one and update
+archived.findOne({ name: 'shopping' },  function (err, todo) {
+  todo.update({ name: 'shopping in delft' })
 });
-
 ```
 
 ## License
