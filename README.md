@@ -9,16 +9,41 @@ work in progress... you should be able to do something like this
 ```js
 var todoapp = new lm('todoapp');
 
-var todolists = todoapp.create('todolists');
-var archived = todoapp.create('archived');
+// create collection
+var list = todoapp.create('todos');
 
-todolists.add({ name: 'shopping' });
+// add records to collection
+list.add({ name: 'shopping' });
 
-var lists = todolists.findAndRemove({})
+// even chain them
+var archived = todoapp.create('archived').add({ name: 'shopping' });
 
-var lists = todolists.findByAttr({});
+// initialize collection while creating
+var todos = [
+  { id: 1, name: 'shopping' },
+  { id: 2, name: 'washing' }
+];
+var list = todoapp.create('todos', todos);
 
-var lists = todolists.findAndUpdate({})
+// remove a collection
+todoapp.remove('todos');
+
+// get collection
+var archived = todoapp.get('archived');
+
+// find, remove and update
+archived.find({ tag: 'kitchen' }, function (err, docs) {
+  // do some stuff
+});
+
+archived.findAndRemove({ id: 1 }, function (err) {
+  // do some stuff
+});
+
+archived.findOne({ name: 'shopping' },  function (err, doc) {
+  doc.update({ name: 'shopping in delft' })
+});
+
 ```
 
 ## License
