@@ -4,8 +4,22 @@
 
 When you are developing applications for mobile, say using phonegap, jQtouch or backbone, you would want to query collections. This library allows you to play around with collections in [mongoose](http://mongoosejs.com/) style.
 
-work in progress...
+work in progress... you should be able to do something like this
 
+```js
+var todoapp = new lm('todoapp');
+
+var todolists = todoapp.create('todolists');
+var archived = todoapp.create('archived');
+
+todolists.add({ name: 'shopping' });
+
+var lists = todolists.findAndRemove({})
+
+var lists = todolists.findByAttr({});
+
+var lists = todolists.findAndUpdate({})
+```
 
 ## License
 (The MIT License)
