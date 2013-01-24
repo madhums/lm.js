@@ -1,4 +1,12 @@
 
+/*!
+ * lm.js
+ * Copyright(c) 2013 Madhusudhan Srinivasa <madhums8@gmail.com>
+ * MIT Licensed
+ */
+
+var debug = true;
+
 /**
  * New database
  *
@@ -11,8 +19,6 @@
  *   });
  *
  */
-
-var debug = true;
 
 function lm (namespace, options) {
   if (!namespace) {
@@ -107,6 +113,9 @@ lm.prototype.remove = function(name) {
  * @param {String} name
  * @return {Object}
  * @api public
+ *
+ * Example
+ *   var archived = todoapp.get('archived');
  */
 
 lm.prototype.get = function(name) {
@@ -120,7 +129,6 @@ lm.prototype.get = function(name) {
   // if not found, return
   if (index < 0) {
     throw new Error('Collection does not exist');
-    return this;
   }
 
   // retrieve from the db
@@ -187,26 +195,31 @@ function Query (namespace, name) {
 }
 
 /**
- * Find a record and remove
- *
- * @param {Type} name
- * @return {Type}
- * @api public
- */
-
-Query.prototype.findAndRemove = function() {
-
-};
-
-/**
  * Find
  *
- * @param {Type} name
- * @return {Type}
+ * @param {Object} query
+ * @param {Function} callback - callback function
+ * @return {Object}
  * @api public
+ *
+ * Example
+ *   archived.find({ tag: 'kitchen' }, function (err, docs) {
+ *     // do some stuff
+ *   })
  */
 
-Query.prototype.find = function() {
+Query.prototype.find = function(query, callback) {
+  if (!arguments.length) {
+    throw new Error('Please specify a query or a callback');
+  }
+
+  if (typeof query === 'function') {
+    // return the whole collection
+    callback = query;
+    query = {};
+  }
+
+
 
 };
 
@@ -219,6 +232,18 @@ Query.prototype.find = function() {
  */
 
 Query.prototype.findOne = function() {
+
+};
+
+/**
+ * Find a record and remove
+ *
+ * @param {Type} name
+ * @return {Type}
+ * @api public
+ */
+
+Query.prototype.findAndRemove = function() {
 
 };
 
