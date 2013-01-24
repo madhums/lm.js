@@ -131,10 +131,7 @@ lm.prototype.get = function(name) {
     throw new Error('Collection does not exist');
   }
 
-  // retrieve from the db
-  var ns = db.retrieve(this.namespace);
-
-  return new Query(ns[name]);
+  return new Query(this.namespace, name);
 };
 
 
@@ -163,8 +160,8 @@ function Collection (name, namespace) {
  *     { id: 1, name: 'shopping' }
  *   })
  *
- *   you can also chain them
- *   todoapp.create('todos').add({name: 'shopping'})
+ *   // you can also chain them
+ *   var archived = todoapp.create('archived').add({ name: 'eating' });
  */
 
 Collection.prototype.add = function(record) {
@@ -191,13 +188,13 @@ Collection.prototype.add = function(record) {
 
 function Query (namespace, name) {
   this.namespace = namespace;
-  this.collection = name;
+  this.collectionName = name;
 }
 
 /**
  * Find
  *
- * @param {Object} query
+ * @param {Object} criteria
  * @param {Function} callback - callback function
  * @return {Object}
  * @api public
@@ -208,19 +205,44 @@ function Query (namespace, name) {
  *   })
  */
 
-Query.prototype.find = function(query, callback) {
+Query.prototype.find = function(criteria, callback) {
   if (!arguments.length) {
-    throw new Error('Please specify a query or a callback');
+    throw new Error('Please specify a criteria or a callback');
   }
 
-  if (typeof query === 'function') {
+  if (typeof criteria === 'function') {
     // return the whole collection
-    callback = query;
-    query = {};
+    callback = criteria;
+    criteria = {};
   }
 
+  var ns = db.retrieve(this.namespace);
+  var collection = ns[this.collectionName];
 
+  // no criteries given, so return the whole collection
+  if (!Object.keys(criteria).length) {
+    callback(collection);
+  } else {
+    var keys = Object.keys(criteria);
 
+    // filter the collection with the given criterias
+    var result = collection.filter(function (doc) {
+      // loop over criteria
+      for (var i = keys.length - 1; i >= 0; i--) {
+        if (doc[keys[i]] === criteria[keys[i]]) {
+          return true;
+        }
+      };
+
+    });
+
+    // change the prototype of result
+    result.__proto__ = Query.prototype;
+
+    callback(null, result);
+  }
+
+  return this;
 };
 
 /**
@@ -246,6 +268,19 @@ Query.prototype.findOne = function() {
 Query.prototype.findAndRemove = function() {
 
 };
+
+
+/**
+ * Document methods
+ *
+ * @param {Object} obj
+ * @return {Object}
+ * @api public
+ */
+
+Document.prototype.update = function (obj) {
+
+}
 
 
 var db = {}
