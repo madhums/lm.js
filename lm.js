@@ -280,14 +280,31 @@ function Document (namespace, collectionName) {
  */
 
 Document.prototype.update = function (obj) {
+  var doc = this;
   var keys = Object.keys(obj);
 
-  // update the document by replacing the values
-  for (var i = keys.length - 1; i >= 0; i--) {
-    this[keys[i]] = obj[keys[i]];
-  };
+  // retrieve the collection from db
+  var ns = db.retrieve(this.namespace);
+  var collection = ns[this.collectionName];
 
-  return this;
+  // update the document in the collection
+  var updated = collection.map(function (d) {
+    for (var i = keys.length - 1; i >= 0; i--) {
+      if (d[keys[i]] === doc[keys[i]]) {
+        d[keys[i]] = obj[keys[i]];
+
+        // update current document
+        doc[keys[i]] = obj[keys[i]];
+      }
+    };
+    return d;
+  });
+
+  // store the update collection in db
+  ns[this.collectionName] = updated;
+  db.store(this.namespace, ns);
+
+  return doc;
 }
 
 /**
