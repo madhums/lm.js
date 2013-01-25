@@ -312,12 +312,30 @@ Document.prototype.update = function (obj) {
 /**
  * Remove a document
  *
- * @return {Object}
+ * @return {undefined}
  * @api public
  */
 
 Document.prototype.remove = function () {
+  var doc = this;
 
+  // retrieve the collection from db
+  var ns = db.retrieve(this.namespace);
+  var collection = ns[this.collectionName];
+
+  // update the document in the collection
+  var removed = collection.filter(function (d) {
+    // filter the ones that are not equal, hence eleminating the current doc
+    return !isEqual(d, doc, [], []);
+  });
+
+  // store the updated collection in the db
+  ns[this.collectionName] = removed;
+  db.store(this.namespace, ns);
+
+  doc = undefined;
+
+  return doc;
 }
 
 
