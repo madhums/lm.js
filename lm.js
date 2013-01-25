@@ -51,6 +51,7 @@ function lm (namespace, options) {
  *
  * Example
  *   var todos = todoapp.create('todos');
+ *   // initialize with a list
  *   var todos = todoapp.create('todos', [
  *     {id: 1, name: 'shopping'},
  *     {id: 2, name: 'washing'}
@@ -169,13 +170,13 @@ function Collection (name, namespace) {
  *     .add({ name: 'cleaning', tag: 'kitchen' })
  */
 
-Collection.prototype.add = function(record) {
-  if (typeof record !== 'object') {
-    throw new Error('Expecting an object but got '+ typeof record)
+Collection.prototype.add = function(doc) {
+  if (typeof doc !== 'object') {
+    throw new Error('Expecting an object but got '+ typeof doc)
   }
 
   var ns = db.retrieve(this.namespace);
-  ns[this.name].push(record);
+  ns[this.name].push(doc);
   db.store(this.namespace, ns);
 
   return this;
@@ -233,16 +234,18 @@ Query.prototype.find = function(criteria, callback) {
     callback(null, collection);
   } else {
     var keys = Object.keys(criteria);
+    var _docProto = new Document(this.namespace, this.collectionName);
 
     // filter the collection with the given criterias
     var result = collection.filter(function (doc) {
       // loop over criteria
       for (var i = keys.length - 1; i >= 0; i--) {
         if (doc[keys[i]] === criteria[keys[i]]) {
+          // change the prototype of the document to Document
+          doc.__proto__ = _docProto;
           return true;
         }
       };
-
     });
 
     // change the prototype of result to current instance
@@ -254,35 +257,22 @@ Query.prototype.find = function(criteria, callback) {
   return this;
 };
 
+
 /**
- * Find one
+ * Document constructor
  *
- * @param {Object} criteria
- * @param {Function} callback
- * @return {Object}
+ * @param {Type} name
+ * @return {Type}
  * @api public
  */
 
-Query.prototype.findOne = function() {
-
-};
-
-/**
- * Find a record and remove
- *
- * @param {Object} criteria
- * @param {Function} callback
- * @return {Object}
- * @api public
- */
-
-Query.prototype.findAndRemove = function() {
-
-};
-
+function Document (namespace, collectionName) {
+  this.namespace = namespace;
+  this.collectionName = collectionName;
+}
 
 /**
- * Document methods
+ * Update a document
  *
  * @param {Object} obj
  * @return {Object}
@@ -290,6 +280,25 @@ Query.prototype.findAndRemove = function() {
  */
 
 Document.prototype.update = function (obj) {
+  var keys = Object.keys(obj);
+
+  // update the document by replacing the values
+  for (var i = keys.length - 1; i >= 0; i--) {
+    this[keys[i]] = obj[keys[i]];
+  };
+
+  return this;
+}
+
+/**
+ * Remove a document
+ *
+ * @param {Object} obj
+ * @return {Object}
+ * @api public
+ */
+
+Document.prototype.remove = function () {
 
 }
 
