@@ -213,6 +213,8 @@ function Query (namespace, name) {
  *       console.log(records)
  *     })
  *   })
+ *
+ * Multiple criterias are not supported yet
  */
 
 Query.prototype.find = function(criteria, callback) {
@@ -300,7 +302,7 @@ Document.prototype.update = function (obj) {
     return d;
   });
 
-  // store the update collection in db
+  // store the updated collection in the db
   ns[this.collectionName] = updated;
   db.store(this.namespace, ns);
 
@@ -310,7 +312,6 @@ Document.prototype.update = function (obj) {
 /**
  * Remove a document
  *
- * @param {Object} obj
  * @return {Object}
  * @api public
  */
