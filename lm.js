@@ -431,7 +431,7 @@ function log (message) {
   if (debug) console.log(message);
 }
 
-
+// Taken from underscore.js - http://underscorejs.org/underscore.js
 // Internal recursive comparison function for `isEqual`.
 function isEqual (a, b, aStack, bStack) {
   // Identical objects are equal. `0 === -0`, but they aren't identical.
