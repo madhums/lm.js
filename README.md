@@ -7,7 +7,6 @@ When you are developing applications for mobile, say using phonegap, jQtouch or 
 work in progress... you should be able to do something like this
 
 ```js
-
 var todoapp = new lm('todoapp');
 
 // create collection
@@ -38,12 +37,10 @@ todoapp.remove('todos');
 var archived = todoapp.get('archived');
 
 // find
-archived.find({ tag: 'kitchen' }, function (err, docs) {
-  console.log(err);
+archived.find({ tag: 'kitchen' }, function (docs) {
   console.log(docs);
 
-  docs.find({ name: 'eating' }, function (err, records) {
-    console.log(err);
+  docs.find({ name: 'eating' }, function (records) {
     console.log(records);
 
     var doc = records[0]; // { name: 'eating', tag: 'kitchen' }

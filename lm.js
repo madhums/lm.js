@@ -233,7 +233,7 @@ Query.prototype.find = function(criteria, callback) {
 
   // no criteries given, so return the whole collection
   if (!Object.keys(criteria).length) {
-    callback(null, collection);
+    callback(collection);
   } else {
     var keys = Object.keys(criteria);
     var _docProto = new Document(this.namespace, this.collectionName);
@@ -253,7 +253,7 @@ Query.prototype.find = function(criteria, callback) {
     // change the prototype of result to current instance
     result.__proto__ = this;
 
-    callback(null, result);
+    callback(result);
   }
 
   return this;
