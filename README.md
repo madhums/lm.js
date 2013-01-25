@@ -7,6 +7,7 @@ When you are developing applications for mobile, say using phonegap, jQtouch or 
 work in progress... you should be able to do something like this
 
 ```js
+
 var todoapp = new lm('todoapp');
 
 // create collection
@@ -17,11 +18,11 @@ list.add({ name: 'shopping' });
 
 // even chain them
 var archived = todoapp
-                .create('archived')
-                .add({ name: 'shopping', tag: 'outside' })
-                .add({ name: 'eating', tag: 'kitchen' })
-                .add({ name: 'bathing', tag: 'inside' })
-                .add({ name: 'cleaning', tag: 'kitchen' });
+  .create('archived')
+  .add({ name: 'shopping', tag: 'outside' })
+  .add({ name: 'eating', tag: 'kitchen' })
+  .add({ name: 'bathing', tag: 'inside' })
+  .add({ name: 'cleaning', tag: 'kitchen' });
 
 // initialize collection while creating
 var todos = [
@@ -38,21 +39,24 @@ var archived = todoapp.get('archived');
 
 // find
 archived.find({ tag: 'kitchen' }, function (err, docs) {
+  console.log(err);
   console.log(docs);
 
   docs.find({ name: 'eating' }, function (err, records) {
+    console.log(err);
     console.log(records);
+
+    var doc = records[0]; // { name: 'eating', tag: 'kitchen' }
+
+    doc.update({ name: 'cutting' });
+
+    console.log(doc); // { name: 'cutting', tag: 'kitchen' }
+
+    doc.remove();
+
+    console.log(doc);
+    // undefined
   });
-});
-
-// find and remove
-archived.findAndRemove({ id: 1 }, function (err) {
-  // do some stuff
-});
-
-// find one and update
-archived.findOne({ name: 'shopping' },  function (err, todo) {
-  todo.update({ name: 'shopping in delft' })
 });
 ```
 
