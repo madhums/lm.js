@@ -140,6 +140,7 @@ lm.prototype.get = function(name) {
  * Collection
  *
  * @param {String} name
+ * @param {String} namespace
  * @api public
  */
 
@@ -206,6 +207,7 @@ function Query (namespace, name) {
  * @api public
  *
  * Example
+ *   var archived = todoapp.get('archived')
  *   archived.find({ tag: 'kitchen' }, function (err, docs) {
  *     console.log(docs)
  *
@@ -279,6 +281,14 @@ function Document (namespace, collectionName) {
  * @param {Object} obj
  * @return {Object}
  * @api public
+ *
+ * Example
+ *   var archived = todoapp.get('archived')
+ *   archived.find({ tag: 'kitchen' }, function (docs) {
+ *     var record = docs[0];
+ *
+ *     record.update({ tag: 'utensils' })
+ *   })
  */
 
 Document.prototype.update = function (obj) {
@@ -314,6 +324,14 @@ Document.prototype.update = function (obj) {
  *
  * @return {undefined}
  * @api public
+ *
+ * Example
+ *   var archived = todoapp.get('archived')
+ *   archived.find({ tag: 'kitchen' }, function (docs) {
+ *     var record = docs[0];
+ *
+ *     record.remove()
+ *   })
  */
 
 Document.prototype.remove = function () {
