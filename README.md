@@ -1,10 +1,10 @@
-## lm
+## lm.js
 
-`localStorage` manager. mongoose like queries, but for localStorage
+`localStorage` manager.
 
 When you are developing applications for mobile, say using phonegap, jQtouch or backbone, you would want to query collections. This library allows you to play around with collections in an easy way.
 
-work in progress... you should be able to do something like this
+You should be able to do something like this.
 
 ```js
 var todoapp = new lm('todoapp');
