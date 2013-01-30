@@ -3,10 +3,63 @@
  * qUnit tests
  */
 
-test('Instantiate lm.js', function () {
-  var todoapp = new lm('todoapp');
-  strictEqual(todoapp.constructor.name, 'lm', 'The instance is of the same type');
+/**
+ * lm
+ */
+
+module('lm', {
+  teardown: function() {
+    localStorage.clear();
+  }
 });
+test('new lm("db-name") - Instantiate lm.js', function () {
+  expect(1);
+
+  var todoapp = new lm('todoapp');
+
+  strictEqual(todoapp.constructor.name, 'lm', 'Instance is of the same type');
+});
+test('new lm() - Throw when no namespace is specified', function () {
+  expect(1);
+
+  throws(function() {
+      var todoapp = new lm();
+    },
+    'Please provide a name for the db',
+    'Raises an error'
+  );
+});
+test('create - Create a collection', function () {
+  expect(3);
+
+  var todoapp = new lm('todoapp');
+  var list = todoapp.create('todos');
+
+  var ls = localStorage.getObject('todoapp');
+
+  strictEqual(list.constructor.name, 'Collection', 'Returns a Collection');
+  strictEqual(ls.todos.length, 0, 'Todos list is empty');
+  strictEqual(Array.isArray(ls.todos), true, 'Todos is an array');
+});
+test('create - Create a collection and initialize it', function () {
+  expect(2);
+
+  var todoapp = new lm('todoapp');
+  var todos = [
+    { id: 1, name: 'shopping' },
+    { id: 2, name: 'washing' }
+  ];
+  var list = todoapp.create('todos', todos);
+
+  var ls = localStorage.getObject('todoapp');
+
+  strictEqual(ls.todos.length, 2, 'Todos list is not empty');
+  strictEqual(Array.isArray(ls.todos), true, 'Todos is an array');
+});
+
+/**
+ * Description
+ */
 
 
 /*
