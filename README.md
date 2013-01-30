@@ -4,8 +4,6 @@
 
 When you are developing applications for mobile, say using phonegap, jQtouch or backbone, you would want to query collections. This library allows you to play around with collections in an easy way.
 
-You should be able to do something like this.
-
 ```js
 var todoapp = new lm('todoapp');
 
@@ -56,6 +54,9 @@ archived.find({ tag: 'kitchen' }, function (docs) {
   });
 });
 ```
+
+## Tests
+To run tests and to see if `localStorage` is supported in your browser, open the `index.html`.
 
 ## License
 (The MIT License)
