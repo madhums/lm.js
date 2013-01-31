@@ -5,8 +5,6 @@
  * MIT Licensed
  */
 
-var debug = true;
-
 /**
  * New database
  *
@@ -14,23 +12,14 @@ var debug = true;
  * @param {Object} options - options
  *
  * Example
- *   var todoapp = new lm('todoapp', {
- *     debug: false
- *   });
  *
+ *   var todoapp = new lm('todoapp');
  */
 
-function lm (namespace, options) {
+function lm (namespace) {
   if (!namespace) {
     throw new Error('Please provide a name for the db');
   }
-
-  var _options = {
-    debug: true
-  };
-
-  this.options = options || _options;
-  debug = this.options.debug;
 
   // create a namespaced object
   db.store(namespace, {});
@@ -50,6 +39,7 @@ function lm (namespace, options) {
  * @api public
  *
  * Example
+ *
  *   var todos = todoapp.create('todos');
  *   // initialize with a list
  *   var todos = todoapp.create('todos', [
@@ -81,6 +71,7 @@ lm.prototype.create = function(name, arr) {
  * @api public
  *
  * Example
+ *
  *   todoapp.remove('todos');
  */
 
@@ -115,6 +106,7 @@ lm.prototype.remove = function(name) {
  * @api public
  *
  * Example
+ *
  *   var archived = todoapp.get('archived');
  */
 
@@ -156,6 +148,7 @@ function Collection (name, namespace) {
  * @api public
  *
  * Example
+ *
  *   var todos = todoapp.create('todos');
  *   todos.add({
  *     { id: 1, name: 'shopping' }
@@ -206,6 +199,7 @@ function Query (namespace, name) {
  * @api public
  *
  * Example
+ *
  *   var archived = todoapp.get('archived')
  *   archived.find({ tag: 'kitchen' }, function (err, docs) {
  *     console.log(docs)
@@ -289,6 +283,7 @@ function Document (namespace, collectionName) {
  * @api public
  *
  * Example
+ *
  *   var archived = todoapp.get('archived')
  *   archived.find({ tag: 'kitchen' }, function (docs) {
  *     var record = docs[0];
@@ -332,6 +327,7 @@ Document.prototype.update = function (obj) {
  * @api public
  *
  * Example
+ *
  *   var archived = todoapp.get('archived')
  *   archived.find({ tag: 'kitchen' }, function (docs) {
  *     var record = docs[0];
@@ -453,14 +449,6 @@ Storage.prototype.removeObject = function (key) {
   this.removeItem(key);
 };
 
-
-/**
- * log to console
- */
-
-function log (message) {
-  if (debug) console.log(message);
-}
 
 // Taken from underscore.js - http://underscorejs.org/underscore.js
 // Internal recursive comparison function for `isEqual`.
