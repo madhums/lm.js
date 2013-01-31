@@ -20,6 +20,9 @@ test('Support for localStorage', function () {
  */
 
 module('lm', {
+  setup: function () {
+    localStorage.clear();
+  },
   teardown: function() {
     localStorage.clear();
   }
@@ -41,8 +44,22 @@ test('new lm() - Throw when no namespace is specified', function () {
     'Raises an error'
   );
 });
+
+
+/**
+ * Collection
+ */
+
+module('Collection', {
+  setup: function () {
+    localStorage.clear();
+  },
+  teardown: function() {
+    localStorage.clear();
+  }
+});
 test('create - Create a collection', function () {
-  expect(3);
+  expect(4);
 
   var todoapp = new lm('todoapp');
   var list = todoapp.create('todos');
@@ -52,6 +69,7 @@ test('create - Create a collection', function () {
   strictEqual(list.constructor.name, 'Collection', 'Returns a Collection');
   strictEqual(ls.todos.length, 0, 'Todos list is empty');
   strictEqual(Array.isArray(ls.todos), true, 'Todos is an array');
+  strictEqual(list.name, 'todos', 'Name of the list is todos');
 });
 test('create - Create a collection and initialize it', function () {
   expect(2);
@@ -68,10 +86,48 @@ test('create - Create a collection and initialize it', function () {
   strictEqual(ls.todos.length, 2, 'Todos list is not empty');
   strictEqual(Array.isArray(ls.todos), true, 'Todos is an array');
 });
+test('add - Add a record to collection', function () {
+  expect(3);
 
-/**
- * Description
- */
+  var todoapp = new lm('todoapp');
+  var list = todoapp.create('todos');
+  list.add({ name: 'shopping' });
+
+  var ls = localStorage.getObject('todoapp');
+
+  strictEqual(ls.todos.length, 1, 'Todos list is not empty');
+  strictEqual(Array.isArray(ls.todos), true, 'Todos is an array');
+  strictEqual(ls.todos[0].name, 'shopping', 'Added record is stored');
+});
+test('add - Chain add methods', function () {
+  expect(3);
+
+  var todoapp = new lm('todoapp');
+  var archived = todoapp
+    .create('archived')
+    .add({ name: 'shopping', tag: 'outside' })
+    .add({ name: 'eating', tag: 'kitchen' })
+    .add({ name: 'bathing', tag: 'inside' })
+    .add({ name: 'cleaning', tag: 'kitchen' });
+
+  var ls = localStorage.getObject('todoapp');
+
+  strictEqual(ls.archived.length, 4, 'Todos list is not empty');
+  strictEqual(Array.isArray(ls.archived), true, 'Archived is an array');
+  strictEqual(ls.archived[0].name, 'shopping', 'Added record is stored');
+});
+test('remove - Remove a collection', function () {
+  expect(1);
+
+  var todoapp = new lm('todoapp');
+  var list = todoapp.create('todos').add({ name: 'shopping' });
+  todoapp.remove('todos');
+
+  var ls = localStorage.getObject('todoapp');
+
+  strictEqual(ls.todos, undefined, 'Todos is not defined');
+});
+
 
 
 /*
