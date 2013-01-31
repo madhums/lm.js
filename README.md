@@ -1,8 +1,6 @@
 ## lm.js
 
-A simple wrapper around `localStorage` with which you can perform operations on collections and documents.
-
-When you are developing applications for mobile, say using phonegap, jQtouch or backbone, you would want to query collections. This library allows you to play around with collections in an easy way.
+A simple wrapper around `localStorage` with which you can store, query and perform CRUD operations on collections and documents in an easy way.
 
 ## Usage
 
@@ -71,7 +69,7 @@ To run tests open the `index.html` or click [here](http://madhums.me/public/lm.j
 ## License
 (The MIT License)
 
-Copyright (c) 2012 Madhusudhan Srinivasa < [madhums8@gmail.com](mailto:madhums8@gmail.com) >
+Copyright (c) 2013 Madhusudhan Srinivasa < [madhums8@gmail.com](mailto:madhums8@gmail.com) >
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the 'Software'), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
