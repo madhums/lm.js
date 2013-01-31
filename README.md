@@ -4,6 +4,16 @@
 
 When you are developing applications for mobile, say using phonegap, jQtouch or backbone, you would want to query collections. This library allows you to play around with collections in an easy way.
 
+## Usage
+
+Include lm.js in head or tail of your html.
+
+```
+<script type="text/javascript" src="https://raw.github.com/madhums/lm.js/master/lm.js"></script>
+```
+
+You can start using like this
+
 ```js
 var todoapp = new lm('todoapp');
 
@@ -56,7 +66,7 @@ archived.find({ tag: 'kitchen' }, function (docs) {
 ```
 
 ## Tests
-To run tests and to see if `localStorage` is supported in your browser, open the `index.html`.
+To run tests open the `index.html` or click [here](http://madhums.me/public/lm.js/).
 
 ## License
 (The MIT License)
