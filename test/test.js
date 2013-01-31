@@ -176,58 +176,119 @@ test('get - Get a collection', function () {
     'Collection does not exist',
     'Throws an error when collection does not exist and you are trying to get the collection'
   );
-
 });
 
 
-/*
-// create collection
-var list = todoapp.create('todos');
+/**
+ * Query
+ */
 
-// add records to collection
-list.add({ name: 'shopping' });
+module('Query', {
+  setup: function () {
+    localStorage.clear();
+  },
+  teardown: function() {
+    localStorage.clear();
+  }
+});
+test('find - get filtered list from collection', function () {
+  expect(3);
 
-// even chain them
-var archived = todoapp
-  .create('archived')
-  .add({ name: 'shopping', tag: 'outside' })
-  .add({ name: 'eating', tag: 'kitchen' })
-  .add({ name: 'bathing', tag: 'inside' })
-  .add({ name: 'cleaning', tag: 'kitchen' });
+  var todoapp = new lm('todoapp');
+  var old = [
+    { name: 'shopping', tag: 'outside' },
+    { name: 'eating', tag: 'kitchen' },
+    { name: 'bathing', tag: 'inside' },
+    { name: 'cleaning', tag: 'kitchen' }
+  ];
+  todoapp.create('archived', old);
+  var archived = todoapp.get('archived');
 
-// initialize collection while creating
-var todos = [
-  { id: 1, name: 'shopping' },
-  { id: 2, name: 'washing' }
-];
-var list = todoapp.create('todos', todos);
+  var ls = localStorage.getObject('todoapp');
 
-// remove a collection
-todoapp.remove('todos');
+  archived.find({ tag: 'kitchen' }, function (docs) {
+    strictEqual(docs.length, 2, 'There should be two documents with matching criteria');
+    strictEqual(docs instanceof Query, true, 'docs should be instance of Query');
+  });
 
-// get collection
-var archived = todoapp.get('archived');
+  archived.find({}, function (docs) {
+    strictEqual(docs.length, 4, 'Should return all the documents when no criteria is provided');
+  });
+});
 
-// find
-archived.find({ tag: 'kitchen' }, function (docs) {
-  console.log(docs);
 
-  docs.find({ name: 'eating' }, function (records) {
-    console.log(records);
+/**
+ * Document
+ */
 
-    var doc = records[0]; // { name: 'eating', tag: 'kitchen' }
+module('Document', {
+  setup: function () {
+    localStorage.clear();
+  },
+  teardown: function() {
+    localStorage.clear();
+  }
+});
+test('update - update a document in the collection', function () {
+  expect(4);
 
-    doc.update({ name: 'cutting' });
+  var todoapp = new lm('todoapp');
+  var old = [
+    { name: 'shopping', tag: 'outside' },
+    { name: 'eating', tag: 'kitchen' },
+    { name: 'bathing', tag: 'inside' },
+    { name: 'cleaning', tag: 'kitchen' }
+  ];
+  todoapp.create('archived', old);
+  var archived = todoapp.get('archived');
 
-    console.log(doc); // { name: 'cutting', tag: 'kitchen' }
+  archived.find({ tag: 'kitchen' }, function (docs) {
+    var doc = docs[0];
+    var oldName = doc.name;
+
+    doc.update({ name: 'cycling' });
+
+    var ls = localStorage.getObject('todoapp');
+
+    strictEqual(doc.name, 'cycling', 'Should update the name');
+    notStrictEqual(doc.name, oldName, 'Should not be the same');
+
+    var list = ls.archived.filter(function (todo) {
+      return todo.name === 'cycling';
+    });
+    var updated = list[0];
+
+    strictEqual(doc instanceof Document, true, 'doc should be instance of Document');
+    strictEqual(doc.name, updated.name, 'Document should be updated in localStorage');
+  });
+});
+test('remove - remove a document from a collection', function () {
+  expect(2);
+
+  var todoapp = new lm('todoapp');
+  var old = [
+    { name: 'shopping', tag: 'outside' },
+    { name: 'eating', tag: 'kitchen' },
+    { name: 'bathing', tag: 'inside' },
+    { name: 'cleaning', tag: 'kitchen' }
+  ];
+  todoapp.create('archived', old);
+  var archived = todoapp.get('archived');
+
+  archived.find({ tag: 'kitchen' }, function (docs) {
+    var doc = docs[0];
+    var oldName = doc.name;
 
     doc.remove();
 
-    console.log(doc);
-    // undefined
+    var ls = localStorage.getObject('todoapp');
 
-    console.log(localStorage.getObject('todoapp'));
+    strictEqual(doc.name, undefined, 'Should be undefined once removed');
 
+    var list = ls.archived.filter(function (todo) {
+      return oldName === todo.name;
+    });
+
+    strictEqual(list.length, 0, 'The document should be removed from localStorage');
   });
 });
-*/
