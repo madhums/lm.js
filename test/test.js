@@ -11,7 +11,7 @@ test('Support for localStorage', function () {
   expect(2);
 
   strictEqual(typeof window.localStorage, 'object', 'localStorage is present');
-  strictEqual(localStorage.constructor.name, 'Storage', 'localStorage is supported');
+  strictEqual(!!window.localStorage, true, 'localStorage is supported');
 })
 
 
