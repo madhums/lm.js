@@ -352,6 +352,13 @@ Document.prototype.remove = function () {
 
   doc = undefined;
 
+  var keys = Object.keys(this);
+
+  // set all the attributes to undefined
+  for (var i = keys.length - 1; i >= 0; i--) {
+    this[keys[i]] = undefined;
+  };
+
   return doc;
 }
 
