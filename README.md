@@ -1,6 +1,6 @@
 ## lm.js
 
-`localStorage` manager.
+A simple wrapper around `localStorage` with which you can perform operations on collections and documents.
 
 When you are developing applications for mobile, say using phonegap, jQtouch or backbone, you would want to query collections. This library allows you to play around with collections in an easy way.
 
