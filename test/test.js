@@ -127,7 +127,21 @@ test('remove - Remove a collection', function () {
 
   strictEqual(ls.todos, undefined, 'Todos is not defined');
 });
+test('get - Get a collection', function () {
+  expect(4);
 
+  var todoapp = new lm('todoapp');
+  todoapp.create('todos').add({ name: 'shopping' });
+
+  var list = todoapp.get('todos');
+
+  var ls = localStorage.getObject('todoapp');
+
+  strictEqual(ls.todos.length, 1, 'Todos list is not empty');
+  strictEqual(Array.isArray(ls.todos), true, 'Todos is an array');
+  strictEqual(ls.todos[0].name, 'shopping', 'Added record is stored');
+  strictEqual(list.constructor.name, 'Query', 'Returns a query instance');
+});
 
 
 /*
