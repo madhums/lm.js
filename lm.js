@@ -9,7 +9,6 @@
  * New database
  *
  * @param {String} name - name of the database
- * @param {Object} options - options
  *
  * Example
  *
