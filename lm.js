@@ -214,8 +214,6 @@ function Query (namespace, name) {
  *       console.log(records)
  *     })
  *   })
- *
- * Multiple criterias are not supported yet
  */
 
 Query.prototype.find = function(criteria, callback) {
@@ -241,12 +239,21 @@ Query.prototype.find = function(criteria, callback) {
 
     // filter the collection with the given criterias
     var result = collection.filter(function (doc) {
+      // keep a counter of matched key/value pairs
+      var matched = 0;
+
       // loop over criteria
       for (var i = keys.length - 1; i >= 0; i--) {
         if (doc[keys[i]] === criteria[keys[i]]) {
+          matched++;
+
           // change the prototype of the document to Document
           doc.__proto__ = _docProto;
-          return true;
+
+          // check if all the criterias are matched
+          if (matched === keys.length) {
+            return true;
+          }
         }
       };
     });

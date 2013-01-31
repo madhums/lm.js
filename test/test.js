@@ -192,7 +192,7 @@ module('Query', {
   }
 });
 test('find - get filtered list from collection', function () {
-  expect(3);
+  expect(4);
 
   var todoapp = new lm('todoapp');
   var old = [
@@ -209,6 +209,10 @@ test('find - get filtered list from collection', function () {
   archived.find({ tag: 'kitchen' }, function (docs) {
     strictEqual(docs.length, 2, 'There should be two documents with matching criteria');
     strictEqual(docs instanceof Query, true, 'docs should be instance of Query');
+  });
+
+  archived.find({ name: 'eating', tag: 'kitchen' }, function (docs) {
+    strictEqual(docs.length, 1, 'There should be one document with matching criteria');
   });
 
   archived.find({}, function (docs) {
