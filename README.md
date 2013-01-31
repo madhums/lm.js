@@ -8,11 +8,11 @@ When you are developing applications for mobile, say using phonegap, jQtouch or 
 
 Include lm.js in head or tail of your html.
 
-```
+```html
 <script type="text/javascript" src="https://raw.github.com/madhums/lm.js/master/lm.js"></script>
 ```
 
-You can start using like this
+## Example
 
 ```js
 var todoapp = new lm('todoapp');
@@ -59,7 +59,7 @@ archived.find({ tag: 'kitchen' }, function (docs) {
 
     doc.remove();
 
-    console.log(doc);
+    console.log(doc.name);
     // undefined
   });
 });
