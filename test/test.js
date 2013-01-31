@@ -59,7 +59,7 @@ module('Collection', {
   }
 });
 test('create - Create a collection', function () {
-  expect(4);
+  expect(5);
 
   var todoapp = new lm('todoapp');
   var list = todoapp.create('todos');
@@ -70,6 +70,13 @@ test('create - Create a collection', function () {
   strictEqual(ls.todos.length, 0, 'Todos list is empty');
   strictEqual(Array.isArray(ls.todos), true, 'Todos is an array');
   strictEqual(list.name, 'todos', 'Name of the list is todos');
+
+  throws(function () {
+    list.create();
+  },
+    'Please specify a name',
+    'Throws when no name is given to the list'
+  );
 });
 test('create - Create a collection and initialize it', function () {
   expect(2);
@@ -87,7 +94,7 @@ test('create - Create a collection and initialize it', function () {
   strictEqual(Array.isArray(ls.todos), true, 'Todos is an array');
 });
 test('add - Add a record to collection', function () {
-  expect(3);
+  expect(4);
 
   var todoapp = new lm('todoapp');
   var list = todoapp.create('todos');
@@ -98,6 +105,13 @@ test('add - Add a record to collection', function () {
   strictEqual(ls.todos.length, 1, 'Todos list is not empty');
   strictEqual(Array.isArray(ls.todos), true, 'Todos is an array');
   strictEqual(ls.todos[0].name, 'shopping', 'Added record is stored');
+
+  throws(function () {
+    list.add();
+  },
+    'Expecting an object but got undefined',
+    'Throws when no object is passed'
+  );
 });
 test('add - Chain add methods', function () {
   expect(3);
@@ -117,7 +131,7 @@ test('add - Chain add methods', function () {
   strictEqual(ls.archived[0].name, 'shopping', 'Added record is stored');
 });
 test('remove - Remove a collection', function () {
-  expect(1);
+  expect(3);
 
   var todoapp = new lm('todoapp');
   var list = todoapp.create('todos').add({ name: 'shopping' });
@@ -126,9 +140,23 @@ test('remove - Remove a collection', function () {
   var ls = localStorage.getObject('todoapp');
 
   strictEqual(ls.todos, undefined, 'Todos is not defined');
+
+  throws(function () {
+    todoapp.remove('archived');
+  },
+    'Collection does not exist',
+    'Throws when collection does not exist'
+  );
+
+  throws(function () {
+    todoapp.remove();
+  },
+    'Collection does not exist',
+    'Throws when no collection is passed'
+  );
 });
 test('get - Get a collection', function () {
-  expect(4);
+  expect(5);
 
   var todoapp = new lm('todoapp');
   todoapp.create('todos').add({ name: 'shopping' });
@@ -141,6 +169,14 @@ test('get - Get a collection', function () {
   strictEqual(Array.isArray(ls.todos), true, 'Todos is an array');
   strictEqual(ls.todos[0].name, 'shopping', 'Added record is stored');
   strictEqual(list.constructor.name, 'Query', 'Returns a query instance');
+
+  throws(function () {
+    var archived = todoapp.get('archived');
+  },
+    'Collection does not exist',
+    'Throws an error when collection does not exist and you are trying to get the collection'
+  );
+
 });
 
 
