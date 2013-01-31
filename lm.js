@@ -94,8 +94,7 @@ lm.prototype.remove = function(name) {
 
   // if not found, return
   if (index < 0) {
-    log(name + ' collection does not exist');
-    return this;
+    throw new Error('Collection does not exist')
   }
 
   this.collections.splice(index, 1);
