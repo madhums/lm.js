@@ -511,14 +511,6 @@ function isEqual (a, b, aStack, bStack) {
       }
     }
   } else {
-    // Objects with different constructors are not equivalent, but `Object`s
-    // from different frames are.
-    var aCtor = a.constructor, bCtor = b.constructor;
-    if (aCtor !== bCtor && !(typeof aCtor === 'function' && (aCtor instanceof aCtor) &&
-                             typeof bCtor === 'function' && (bCtor instanceof bCtor))) {
-      // avoid this check
-      // return false;
-    }
     // Deep compare objects.
     for (var key in a) {
       if (hasOwnProperty.call(a, key)) {
