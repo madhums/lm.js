@@ -5,6 +5,8 @@
  * MIT Licensed
  */
 
+'use strict';
+
 /**
  * New database
  *
