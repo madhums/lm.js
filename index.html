@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Lm.js by madhums</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Lm.js</h1>
+        <p>localStorage manager.</p>
+
+        <p class="view"><a href="https://github.com/madhums/lm.js">View the Project on GitHub <small>madhums/lm.js</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/madhums/lm.js/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/madhums/lm.js/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/madhums/lm.js">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p>localStorage manager (lm.js) is a simple wrapper around <code>localStorage</code> with which you can store, query and perform CRUD operations on collections and documents in an easy way.</p>
+
+<h2>Initialize your app</h2>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">todoapp</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">lm</span><span class="p">(</span><span class="s1">'todoapp'</span><span class="p">);</span>
+</pre></div>
+
+<h2>Create a collection</h2>
+
+<div class="highlight"><pre><span class="c1">// create collection</span>
+<span class="kd">var</span> <span class="nx">list</span> <span class="o">=</span> <span class="nx">todoapp</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s1">'todos'</span><span class="p">);</span>
+</pre></div>
+
+<p>or create an initialized collection</p>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">todosList</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">'shopping'</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">'washing'</span> <span class="p">}</span>
+<span class="p">];</span>
+<span class="kd">var</span> <span class="nx">list</span> <span class="o">=</span> <span class="nx">todoapp</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s1">'todos'</span><span class="p">,</span> <span class="nx">todosList</span><span class="p">);</span>
+</pre></div>
+
+<h2>Add records to collection</h2>
+
+<div class="highlight"><pre><span class="c1">// create collection</span>
+<span class="kd">var</span> <span class="nx">list</span> <span class="o">=</span> <span class="nx">todoapp</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s1">'todos'</span><span class="p">);</span>
+
+<span class="c1">// add records to collection</span>
+<span class="nx">list</span><span class="p">.</span><span class="nx">add</span><span class="p">({</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">'shopping'</span> <span class="p">});</span>
+</pre></div>
+
+<h2>Chain them</h2>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">archived</span> <span class="o">=</span> <span class="nx">todoapp</span>
+  <span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s1">'archived'</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">add</span><span class="p">({</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">'shopping'</span><span class="p">,</span> <span class="nx">tag</span><span class="o">:</span> <span class="s1">'outside'</span> <span class="p">})</span>
+  <span class="p">.</span><span class="nx">add</span><span class="p">({</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">'eating'</span><span class="p">,</span> <span class="nx">tag</span><span class="o">:</span> <span class="s1">'kitchen'</span> <span class="p">})</span>
+  <span class="p">.</span><span class="nx">add</span><span class="p">({</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">'bathing'</span><span class="p">,</span> <span class="nx">tag</span><span class="o">:</span> <span class="s1">'inside'</span> <span class="p">})</span>
+  <span class="p">.</span><span class="nx">add</span><span class="p">({</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">'cleaning'</span><span class="p">,</span> <span class="nx">tag</span><span class="o">:</span> <span class="s1">'kitchen'</span> <span class="p">});</span>
+</pre></div>
+
+<h2>Remove a collection</h2>
+
+<div class="highlight"><pre><span class="c1">// remove a collection</span>
+<span class="nx">todoapp</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="s1">'todos'</span><span class="p">);</span>
+</pre></div>
+
+<h2>Retrieve a collection</h2>
+
+<div class="highlight"><pre><span class="c1">// get collection</span>
+<span class="kd">var</span> <span class="nx">archived</span> <span class="o">=</span> <span class="nx">todoapp</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">'archived'</span><span class="p">);</span>
+</pre></div>
+
+<h2>Find within a collection</h2>
+
+<div class="highlight"><pre><span class="nx">archived</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span> <span class="nx">tag</span><span class="o">:</span> <span class="s1">'kitchen'</span> <span class="p">},</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">docs</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">docs</span><span class="p">);</span>
+  <span class="c1">// output:</span>
+  <span class="c1">// [{ name: 'eating', tag: 'kitchen' }, { name: 'cleaning', tag: 'kitchen' }]</span>
+<span class="p">});</span>
+</pre></div>
+
+<h2>Update a document within a collection</h2>
+
+<div class="highlight"><pre><span class="nx">archived</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span> <span class="nx">tag</span><span class="o">:</span> <span class="s1">'kitchen'</span> <span class="p">},</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">docs</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">docs</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">'eating'</span> <span class="p">},</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">records</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">doc</span> <span class="o">=</span> <span class="nx">records</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="c1">// { name: 'eating', tag: 'kitchen' }</span>
+
+    <span class="nx">doc</span><span class="p">.</span><span class="nx">update</span><span class="p">({</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">'cutting'</span> <span class="p">});</span>
+
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">doc</span><span class="p">);</span> <span class="c1">// { name: 'cutting', tag: 'kitchen' }</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</pre></div>
+
+<h2>Remove a document within a collection</h2>
+
+<div class="highlight"><pre><span class="nx">archived</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span> <span class="nx">tag</span><span class="o">:</span> <span class="s1">'kitchen'</span> <span class="p">},</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">docs</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">docs</span><span class="p">.</span><span class="nx">find</span><span class="p">({</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">'eating'</span> <span class="p">},</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">records</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">doc</span> <span class="o">=</span> <span class="nx">records</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="c1">// { name: 'eating', tag: 'kitchen' }</span>
+
+    <span class="nx">doc</span><span class="p">.</span><span class="nx">remove</span><span class="p">();</span>
+
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">doc</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
+    <span class="c1">// undefined</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</pre></div>
+
+<p>To use it, just source <code>lm.js</code> in your app.</p>
+
+<h2>Tests</h2>
+
+<p>You can see the test results <a href="http://madhums.me/public/lm.js/">here</a></p>
+
+<h2>Limitations</h2>
+
+<p>Localstorage has a limitation of 5MB, so if you want to use offline data storage with files etc, <a href="http://hacks.mozilla.org/2012/02/storing-images-and-files-in-indexeddb/">indexedDB</a> would be a good option.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/madhums">madhums</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-32621427-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
