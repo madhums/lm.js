@@ -262,6 +262,19 @@ Query.prototype.find = function(criteria, callback) {
   return this;
 };
 
+/**
+ * Count of collections
+ *
+ * @return {Number}
+ * @api public
+ */
+
+Query.prototype.count = function () {
+  var ns = db.retrieve(this.namespace);
+  var collection = ns[this.collectionName];
+  return collection.length;
+};
+
 
 /**
  * Document constructor
