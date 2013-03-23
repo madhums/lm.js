@@ -127,6 +127,26 @@ lm.prototype.get = function(name) {
   return new Query(this.namespace, name);
 };
 
+/**
+ * Empty a collection
+ *
+ * @param {String} name
+ * @return {lm}
+ * @api public
+ */
+
+lm.prototype.clear = function (name) {
+  if (!name) {
+    throw new Error('Please specify the name of the collection');
+  }
+
+  // remove from the db
+  var ns = db.retrieve(this.namespace);
+  ns[name] = [];
+  db.store(this.namespace, ns);
+
+  return this;
+};
 
 /**
  * Collection
