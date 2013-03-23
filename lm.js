@@ -36,7 +36,7 @@ function lm (namespace) {
  *
  * @param {String} name - name of the collection
  * @param {Array} arr - collection of objects
- * @return {Object}
+ * @return {Collection}
  * @api public
  *
  * Example
@@ -68,7 +68,7 @@ lm.prototype.create = function(name, arr) {
  * Remove a collection
  *
  * @param {String} name
- * @return {Object}
+ * @return {lm}
  * @api public
  *
  * Example
@@ -103,7 +103,7 @@ lm.prototype.remove = function(name) {
  * Get a collection
  *
  * @param {String} name
- * @return {Object}
+ * @return {Query}
  * @api public
  *
  * Example
@@ -164,8 +164,8 @@ function Collection (name, namespace) {
 /**
  * Add a record to the collection
  *
- * @param {Object} record
- * @return {Object}
+ * @param {Object} doc
+ * @return {lm}
  * @api public
  *
  * Example
@@ -202,7 +202,6 @@ Collection.prototype.add = function(doc) {
  *
  * @param {String} namespace
  * @param {String} name - name of the collection
- * @return {Object}
  * @api public
  */
 
@@ -216,7 +215,7 @@ function Query (namespace, name) {
  *
  * @param {Object} criteria
  * @param {Function} callback - callback function
- * @return {Object}
+ * @return {Query}
  * @api public
  *
  * Example
@@ -299,8 +298,8 @@ Query.prototype.count = function () {
 /**
  * Document constructor
  *
- * @param {Type} name
- * @return {Type}
+ * @param {String} namespace
+ * @param {String} collectionName
  * @api public
  */
 
@@ -313,7 +312,7 @@ function Document (namespace, collectionName) {
  * Update a document
  *
  * @param {Object} obj
- * @return {Object}
+ * @return {Document}
  * @api public
  *
  * Example
