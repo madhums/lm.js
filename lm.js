@@ -65,34 +65,6 @@ lm.prototype.create = function(name, arr) {
 };
 
 /**
- * Create objects within the namespace
- *
- * @param {String} name - name of the object
- * @param {Object} obj - object itself
- * @return {Collection}
- * @api public
- *
- * Example
- *
- *   var todos = todoapp.create('user');
- *   // initialize with a list
- *   var todos = todoapp.set('user', { name: 'abc' });
- */
-
-lm.prototype.set = function(name, obj) {
-  if (!name) {
-    throw new Error('Please specify a name');
-  }
-
-  // set the object
-  var ns = db.retrieve(this.namespace);
-  ns[name] = obj || {};
-  db.store(this.namespace, ns);
-
-  return new Collection(name, this.namespace);
-};
-
-/**
  * Remove a collection
  *
  * @param {String} name
@@ -128,10 +100,10 @@ lm.prototype.remove = function(name) {
 };
 
 /**
- * Get a collection/Object
+ * Get a collection
  *
  * @param {String} name
- * @return {Query|Object}
+ * @return {Query}
  * @api public
  *
  * Example
@@ -148,10 +120,8 @@ lm.prototype.get = function(name) {
   var index = this.collections.indexOf(name);
 
   // if not found, return
-  if (index < 0 && !db.retrieve(this.namespace)[name]) {
-    throw new Error('Collection/Object does not exist');
-  } else if (db.retrieve(this.namespace)[name] && index < 0) {
-    return db.retrieve(this.namespace)[name]
+  if (index < 0) {
+    throw new Error('Collection does not exist');
   }
 
   return new Query(this.namespace, name);
