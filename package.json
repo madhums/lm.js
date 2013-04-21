@@ -1,0 +1,30 @@
+{
+  "name": "lm.js",
+  "version": "0.1.0",
+  "description": "localStorage manager. A simple wrapper around localStorage with which you can store, query and perform CRUD operations on collections and documents in an easy way.",
+  "main": "grunt.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "grunt": "~0.4.1"
+  },
+  "devDependencies": {
+    "grunt-contrib-qunit": "~0.2.1"
+  },
+  "scripts": {
+    "test": "grunt default --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/madhums/lm.js.git"
+  },
+  "keywords": [
+    "localstorage",
+    "lm.js"
+  ],
+  "author": "Madhusudhan Srinivasa",
+  "license": "MIT",
+  "gitHead": "8a844701df0ae68c9823396cdb105c6875547e75",
+  "readmeFilename": "README.md"
+}
