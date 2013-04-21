@@ -68,6 +68,13 @@ archived.find({ tag: 'kitchen' }, function (docs) {
 ## Tests
 To run tests open the `index.html` or click [here](http://madhums.me/public/lm.js/).
 
+Testing from command line: Make sure you have grunt-cli installed (`npm install -g grunt-cli`)
+
+```sh
+$ npm install
+$ npm test
+```
+
 ## License
 (The MIT License)
 
