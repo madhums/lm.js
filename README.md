@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/madhums/lm.js.png)](https://travis-ci.org/madhums/lm.js)
+
 ## lm.js
 
 A simple wrapper around `localStorage` with which you can store, query and perform CRUD operations on collections and documents in an easy way.
