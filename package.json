@@ -26,5 +26,15 @@
   "author": "Madhusudhan Srinivasa",
   "license": "MIT",
   "gitHead": "8a844701df0ae68c9823396cdb105c6875547e75",
-  "readmeFilename": "README.md"
+  "readmeFilename": "README.md",
+  "testling": {
+    "files": "test/*.js",
+    "browsers": {
+      "ie": [ 8, 9, 10 ],
+      "firefox": [ 13 ],
+      "chrome": [ 20 ],
+      "safari": [ 5.1 ],
+      "opera": [ 12 ]
+    }
+  }
 }

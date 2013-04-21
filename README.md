@@ -4,6 +4,8 @@
 
 A simple wrapper around `localStorage` with which you can store, query and perform CRUD operations on collections and documents in an easy way.
 
+[![browser support](https://ci.testling.com/madhums/lm.js.png)](https://ci.testling.com/madhums/lm.js)
+
 ## Usage
 
 Include lm.js in head or tail of your html.
